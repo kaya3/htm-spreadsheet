@@ -34,7 +34,7 @@ OUTPUT [reg-x] [reg-y] # from register 2
 
 JUMPIF [pc-regno] [condition-regno]
 # if the value in the condition register is zero, set the program counter to the value in the pc register
-# to jump unconditionally, simply set register 0 to change the program counter, or load a constant true
+# to jump unconditionally, simply set register 0 to change the program counter
 
 ADD
 MULT
