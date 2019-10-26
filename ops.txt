@@ -20,8 +20,8 @@ POP [regno]
 LOAD [regno-read-to] [regno-address]
 # read the value from (BOS + address) and store in read-to register
 
-STORE [regno-write-to] [regno-address]
-# write the value from write-to register at address (BOS + address)
+STORE [regno-write-from] [regno-address]
+# write the value from write-from register at address (BOS + address)
 
 COPY [regno-to] [regno-from]
 # copy the value from one register to another
