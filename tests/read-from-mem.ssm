@@ -1,0 +1,8 @@
+; ASSERT 5
+CONST 3 5
+PUSH 3
+LOAD 3 4
+PUSH 3
+CONST 4 1
+LOAD 2 4
+write-to-output 1 1

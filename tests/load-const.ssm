@@ -1,0 +1,3 @@
+; ASSERT 5
+LOAD 2 5
+OUTPUT 1 1
