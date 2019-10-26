@@ -1,0 +1,52 @@
+8? registers
+program counter = register 0
+base-of-stack-pointer = register 1
+top-of-stack-pointer
+stack
+
+# program halts when PC = -1
+
+---
+
+load-constant [regno] [value]
+# store a constant value in a register
+
+push [regno]
+# push the value from a register to the top of the stack, incrementing TOS
+
+pop [regno]
+# pop the value from the top of the stack to a register, decrementing TOS
+
+read-from-mem [regno-address] [regno-read-to]
+# read the value from (BOS + address) and store in read-to register
+
+write-to-mem [regno-address] [regno-write-to]
+# write the value from write-to register at address (BOS + address)
+
+copy-reg [regno-from] [regno-to]
+# copy the value from one register to another
+
+read-from-input [reg-x] [reg-y] # to register 2
+# read the value from the input spreadsheet at coordinates x,y and store it in register 2
+
+write-to-output [reg-x] [reg-y] # from register 2
+# write the value from register 2 to the output spreadsheet at coordinates x,y
+
+jumpif [pc-regno] [condition-regno]
+# if the value in the condition register is zero, set the program counter to the value in the pc register
+# to jump unconditionally, simply set register 0 to change the program counter, or load a constant true
+
+add
+multiply
+bitwise-and
+bitwise-or
+bitwise-left-shift
+bitwise-right-shift
+equals
+less-than
+# binary operations taking [reg-a] [reg-b]:
+# compute the result of the operation on the values a,b and store in register a
+# comparison ops equals/less-than store 1 or 0 for true/false
+
+bitwise-not [reg-no]
+# perform a bitwise not on the value in a register
