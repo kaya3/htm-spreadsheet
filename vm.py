@@ -1,3 +1,5 @@
+#!/usr/bin/python3
+
 REGISTER_COUNT = 8
 IO_SIZE = 9
 PC_REGISTER = 0
@@ -30,13 +32,21 @@ def empty_grid(n):
 	return [ [0]*n for i in range(IO_SIZE) ]
 
 class VM:
-	def __init__(self, input_grid=None):
+	def __init__(self, program=None, input_grid=None):
+		self.program = [] if program is None else program
 		self.state = State()
 		self.input_grid = empty_grid(IO_SIZE) if input_grid is None else input_grid
 		self.output_grid = empty_grid(IO_SIZE)
 	
-	def execute(self, instruction):
-		op,arg1,arg2 = instruction
+	@property
+	def is_running(self):
+		return self.state.program_counter >= 0 and self.state.program_counter < len(self.program)
+	
+	def step(self, instruction=None):
+		if instruction is None and not self.is_running:
+			raise ValueError('VM has halted')
+		
+		op,arg1,arg2 = self.program[self.state.program_counter] if instruction is None else instruction
 		
 		registers = list(self.state.registers)
 		registers[PC_REGISTER] += 1
@@ -93,3 +103,30 @@ class VM:
 			raise ValueError('Unknown op: ' + op)
 		
 		self.state = State(registers, top_of_stack, stack)
+
+def parse_line(line):
+	line = line.split(';')[0].strip()
+	if line:
+		parts = line.split(' ') + [0]
+		return (parts[0], int(parts[1]), int(parts[2]))
+	else:
+		return None
+
+if __name__ == '__main__':
+	program = []
+	
+	import fileinput
+	for line in fileinput.input():
+		instruction = parse_line(line)
+		if instruction is not None:
+			program.append(instruction)
+	
+	vm = VM(program)
+	while vm.is_running:
+		vm.step()
+	
+	print('VM state: {!r}\n'.format(vm.state))
+	
+	print('Output grid:')
+	for row in vm.output_grid:
+		print(*row, sep='\t')

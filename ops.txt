@@ -4,7 +4,7 @@ base-of-stack-pointer = register 1
 top-of-stack-pointer
 stack
 
-# program halts when PC = -1
+# program halts when PC < 0
 
 ---
 
