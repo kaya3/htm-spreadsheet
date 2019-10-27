@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 
 REGISTER_COUNT = 8
-IO_SIZE = 9
+IO_SIZE = 16
 PC_REGISTER = 0
 BOS_REGISTER = 1
 IO_REGISTER = 2
@@ -52,7 +52,7 @@ class VM:
 		stack = list(self.state.stack)
 		
 		if op == 'CONST':
-			stack.push(arg1)
+			stack.append(arg1)
 		elif op == 'PUSH':
 			stack.append(registers[arg1])
 		elif op == 'POP':
@@ -70,7 +70,7 @@ class VM:
 				registers[PC_REGISTER] = registers[arg1]
 		elif op == 'NOT':
 			x = stack.pop()
-			stack.push(~x & MAX_INT)
+			stack.append(~x & MAX_INT)
 		else:
 			y = stack.pop()
 			x = stack.pop()
@@ -79,23 +79,23 @@ class VM:
 			elif op == 'OUTPUT':
 				self.output_grid[y][x] = registers[IO_REGISTER]
 			elif op == 'ADD':
-				stack.push((x + y) & MAX_INT)
+				stack.append((x + y) & MAX_INT)
 			elif op == 'MULT':
-				stack.push((x * y) & MAX_INT)
+				stack.append((x * y) & MAX_INT)
 			elif op == 'AND':
-				stack.push(x & y)
+				stack.append(x & y)
 			elif op == 'OR':
-				stack.push(x | y)
+				stack.append(x | y)
 			elif op == 'XOR':
-				stack.push(x ^ y)
+				stack.append(x ^ y)
 			elif op == 'LSHIFT':
-				stack.push((x << y) & MAX_INT)
+				stack.append((x << y) & MAX_INT)
 			elif op == 'RSHIFT':
-				stack.push(x >> y)
+				stack.append(x >> y)
 			elif op == 'EQUALS':
-				stack.push(int(x == y))
+				stack.append(int(x == y))
 			elif op == 'LESSTHAN':
-				stack.push(int(x < y))
+				stack.append(int(x < y))
 			else:
 				raise ValueError('Unknown op: ' + op)
 		
@@ -104,7 +104,7 @@ class VM:
 def parse_line(line):
 	line = line.split(';')[0].strip()
 	if line:
-		parts = line.split(' ') + [0]
+		parts = line.split(' ') + [0,0]
 		return (parts[0], int(parts[1]), int(parts[2]))
 	else:
 		return None
