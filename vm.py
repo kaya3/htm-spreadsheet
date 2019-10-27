@@ -26,15 +26,15 @@ class State:
 	def base_of_stack(self):
 		return self.registers[BOS_REGISTER]
 
-def empty_grid(n):
-	return [ [0]*n for i in range(IO_SIZE) ]
+def empty_grid(n, v=0):
+	return [ [v]*n for i in range(IO_SIZE) ]
 
 class VM:
 	def __init__(self, program=None, input_grid=None):
 		self.program = [] if program is None else program
 		self.state = State()
 		self.input_grid = empty_grid(IO_SIZE) if input_grid is None else input_grid
-		self.output_grid = empty_grid(IO_SIZE)
+		self.output_grid = empty_grid(IO_SIZE, '')
 	
 	@property
 	def is_running(self):
@@ -75,9 +75,10 @@ class VM:
 			y = stack.pop()
 			x = stack.pop()
 			if op == 'INPUT':
-				registers[IO_REGISTER] = self.input_grid[y][x]
+				registers[IO_REGISTER] = self.input_grid[y][x] if (x in range(IO_SIZE) and y in range(IO_SIZE)) else ''
 			elif op == 'OUTPUT':
-				self.output_grid[y][x] = registers[IO_REGISTER]
+				if x in range(IO_SIZE) and y in range(IO_SIZE):
+					self.output_grid[y][x] = registers[IO_REGISTER]
 			elif op == 'ADD':
 				stack.append(x + y)
 			elif op == 'MULT':
@@ -122,8 +123,8 @@ if __name__ == '__main__':
 	while vm.is_running:
 		vm.step()
 	
-	print('VM state: {!r}\n'.format(vm.state))
+	#print('VM state: {!r}\n'.format(vm.state))
 	
-	print('Output grid:')
+	#print('Output grid:')
 	for row in vm.output_grid:
 		print(*row, sep='\t')
