@@ -1,9 +1,11 @@
 .~lock.*
+.idea/
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
-*$py.class
+*.class
+out/
 
 # C extensions
 *.so
