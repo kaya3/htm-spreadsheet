@@ -8,8 +8,8 @@ stack
 
 ---
 
-CONST [regno] [value]
-# store a constant value in a register
+CONST [value]
+# push a constant value to the stack, incrementing TOS
 
 PUSH [regno]
 # push the value from a register to the top of the stack, incrementing TOS
@@ -26,27 +26,28 @@ STORE [regno-write-from] [regno-address]
 COPY [regno-to] [regno-from]
 # copy the value from one register to another
 
-INPUT [reg-x] [reg-y] # to register 2
-# read the value from the input spreadsheet at coordinates x,y and store it in register 2
+INPUT
+# pop coordinates x,y from the stack, decrementing TOS by 2, and read from input grid to store in register 2.
 
-OUTPUT [reg-x] [reg-y] # from register 2
-# write the value from register 2 to the output spreadsheet at coordinates x,y
+OUTPUT # from register 2
+# pop coordinates x,y from the stack, decrementing TOS by 2, and write from register 2 to the output spreadsheet.
 
-JUMPIF [pc-regno] [condition-regno]
-# if the value in the condition register is zero, set the program counter to the value in the pc register
+JUMPIF [pc-regno]
+# condition value is popped from the stack, decrementing TOS. if the condition value is zero, set the program counter to the value in the pc register
 # to jump unconditionally, simply set register 0 to change the program counter
 
 ADD
 MULT
 AND
 OR
+XOR
 LSHIFT
 RSHIFT
 EQUALS
 LESSTHAN
-# binary operations taking [reg-a] [reg-b]:
-# compute the result of the operation on the values a,b and store in register a
+# binary operations work on the stack, decrementing TOS
+# bitwise ops work on 16-bit ints
 # comparison ops equals/less-than store 1 or 0 for true/false
 
-NOT [reg-no]
-# perform a bitwise not on the value in a register; 16-bit int
+NOT
+# perform a bitwise not on the top of the stack, as a 16-bit int
