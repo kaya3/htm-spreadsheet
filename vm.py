@@ -79,9 +79,9 @@ class VM:
 			elif op == 'OUTPUT':
 				self.output_grid[y][x] = registers[IO_REGISTER]
 			elif op == 'ADD':
-				stack.append((x + y) & MAX_INT)
+				stack.append(x + y)
 			elif op == 'MULT':
-				stack.append((x * y) & MAX_INT)
+				stack.append(x * y)
 			elif op == 'AND':
 				stack.append(x & y)
 			elif op == 'OR':
